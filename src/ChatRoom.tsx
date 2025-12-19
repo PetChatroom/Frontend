@@ -156,11 +156,19 @@ function ChatRoom({ chatroomId, currentUserId, onLeaveChat }: ChatRoomProps) {
         if (newMessage) {
           setSubscriptionConnected(true); // Mark as connected when receiving messages
           setMessages((prev) => {
-            // Prevent duplicate messages
-            const exists = prev.some((msg) => msg.id === newMessage.id);
+            // Remove any temporary optimistic message for the same content from same sender
+            const filtered = prev.filter(
+              (msg) => 
+                !(msg.id.startsWith('temp-') && 
+                  msg.senderId === newMessage.senderId && 
+                  msg.text === newMessage.text)
+            );
+            
+            // Prevent duplicate messages with real IDs
+            const exists = filtered.some((msg) => msg.id === newMessage.id);
             if (exists) return prev;
             
-            const updatedMessages = [...prev, newMessage as Message];
+            const updatedMessages = [...filtered, newMessage as Message];
             generateFriendlyNames(updatedMessages);
             return updatedMessages;
           });
