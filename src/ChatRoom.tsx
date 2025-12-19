@@ -56,7 +56,17 @@ function ChatRoom({ chatroomId, currentUserId, onLeaveChat }: ChatRoomProps) {
     const namesMap: Record<string, string> = {};
     const colorsMap: Record<string, string> = {};
     const seenUserIds = new Set<string>();
-    let playerCount = 1;
+    const humanNames = [
+      "Sam",
+      "Chris",
+      "Pat",
+      "Drew",
+      "Avery",
+      "Blake",
+      "Cameron",
+      "Dakota",
+    ];
+    let humanNameIndex = 0;
 
     messages.forEach((message) => {
       if (message.senderId && !seenUserIds.has(message.senderId)) {
@@ -80,7 +90,7 @@ function ChatRoom({ chatroomId, currentUserId, onLeaveChat }: ChatRoomProps) {
             aiNames[Math.floor(Math.random() * aiNames.length)];
           namesMap[message.senderId] = randomName;
         } else {
-          namesMap[message.senderId] = `Player ${playerCount++}`;
+          namesMap[message.senderId] = humanNames[humanNameIndex++ % humanNames.length];
         }
       }
     });
@@ -220,18 +230,33 @@ function ChatRoom({ chatroomId, currentUserId, onLeaveChat }: ChatRoomProps) {
     event.preventDefault();
     if (messageText.trim() === "" || !currentUserId || isGameOver) return;
 
+    const optimisticMessage: Message = {
+      id: `temp-${Date.now()}`,
+      chatroomId: chatroomId,
+      senderId: currentUserId,
+      text: messageText,
+      createdAt: new Date().toISOString(),
+    };
+
+    // Optimistically add message to UI immediately
+    setMessages((prev) => [...prev, optimisticMessage]);
+    const sentText = messageText;
+    setMessageText("");
+
     try {
       await client.graphql({
         query: sendMessage,
         variables: {
           chatroomId: chatroomId,
           senderId: currentUserId,
-          text: messageText,
+          text: sentText,
         },
       });
-      setMessageText("");
     } catch (error) {
       console.error("Error sending message:", error);
+      // Remove optimistic message on error
+      setMessages((prev) => prev.filter((msg) => msg.id !== optimisticMessage.id));
+      setMessageText(sentText); // Restore the message text
     }
   };
 
