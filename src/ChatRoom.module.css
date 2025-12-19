@@ -1,0 +1,145 @@
+/* ChatRoom.module.css */
+.chatContainer {
+  display: flex;
+  flex-direction: column;
+  height: 95vh;
+  width: 100%;
+  max-width: 800px;
+  background: var(--whatsapp-bg-color);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.chatHeader {
+  background: var(--light-gray);
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.backButton {
+  background: transparent;
+  color: var(--whatsapp-secondary);
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.participantCount {
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.messagesContainer {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  max-width: 70%;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+  word-wrap: break-word;
+}
+
+.messageOwn {
+  background: var(--outgoing-bubble);
+  align-self: flex-end;
+  border-top-right-radius: 0;
+}
+
+.messageOther {
+  background: var(--incoming-bubble);
+  align-self: flex-start;
+  border-top-left-radius: 0;
+}
+
+.messageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.senderName {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.messageTime {
+  font-size: 0.75rem;
+  color: var(--text-light);
+  margin-left: 0.5rem;
+}
+
+.messageText {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.messageForm {
+  display: flex;
+  padding: 0.75rem;
+  background: var(--light-gray);
+  border-top: 1px solid #ddd;
+  align-items: center;
+}
+
+.messageInput {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  margin-right: 0.5rem;
+  font-size: 1rem;
+}
+
+.messageInput:focus {
+  outline: none;
+  border-color: var(--whatsapp-secondary);
+}
+
+.sendButton {
+  background: var(--whatsapp-secondary);
+  color: white;
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s;
+}
+
+.sendButton:hover {
+  background: var(--whatsapp-primary);
+}
+
+/* Add a "send" icon using CSS */
+.sendButton::after {
+  content: '➤';
+  transform: rotate(-45deg);
+  margin-bottom: 2px;
+}
+
+.loadingChat {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 1.2rem;
+  color: var(--text-light);
+}
