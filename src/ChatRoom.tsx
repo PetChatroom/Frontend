@@ -66,7 +66,26 @@ function ChatRoom({ chatroomId, currentUserId, onLeaveChat }: ChatRoomProps) {
       "Cameron",
       "Dakota",
     ];
+    const aiNames = [
+      "Alex",
+      "Jordan",
+      "Taylor",
+      "Casey",
+      "Morgan",
+      "Riley",
+      "Jamie",
+      "Quinn",
+    ];
     let humanNameIndex = 0;
+
+    // Helper to generate consistent index from user ID
+    const getConsistentIndex = (userId: string, arrayLength: number): number => {
+      let hash = 0;
+      for (let i = 0; i < userId.length; i++) {
+        hash = userId.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      return Math.abs(hash) % arrayLength;
+    };
 
     messages.forEach((message) => {
       if (message.senderId && !seenUserIds.has(message.senderId)) {
@@ -76,19 +95,8 @@ function ChatRoom({ chatroomId, currentUserId, onLeaveChat }: ChatRoomProps) {
         if (message.senderId === currentUserId) {
           namesMap[message.senderId] = "You";
         } else if (message.senderId.startsWith("ai-")) {
-          const aiNames = [
-            "Alex",
-            "Jordan",
-            "Taylor",
-            "Casey",
-            "Morgan",
-            "Riley",
-            "Jamie",
-            "Quinn",
-          ];
-          const randomName =
-            aiNames[Math.floor(Math.random() * aiNames.length)];
-          namesMap[message.senderId] = randomName;
+          const nameIndex = getConsistentIndex(message.senderId, aiNames.length);
+          namesMap[message.senderId] = aiNames[nameIndex];
         } else {
           namesMap[message.senderId] = humanNames[humanNameIndex++ % humanNames.length];
         }
