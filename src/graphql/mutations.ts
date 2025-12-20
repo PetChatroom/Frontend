@@ -50,3 +50,33 @@ export const createMatch = /* GraphQL */ `
     }
   }
 `;
+
+export const submitSurvey = /* GraphQL */ `
+  mutation SubmitSurvey(
+    $chatroomId: ID!
+    $userId: ID!
+    $botGuess: String!
+    $reasoning: String
+    $llmKnowledge: String!
+    $chatbotFrequency: String!
+    $age: Int!
+    $education: String!
+  ) {
+    submitSurvey(
+      chatroomId: $chatroomId
+      userId: $userId
+      botGuess: $botGuess
+      reasoning: $reasoning
+      llmKnowledge: $llmKnowledge
+      chatbotFrequency: $chatbotFrequency
+      age: $age
+      education: $education
+    ) {
+      id
+      timestamp
+      __typename
+    }
+  }
+`;
+  }
+`;

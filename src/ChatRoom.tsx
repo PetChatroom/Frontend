@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { getMessages } from "./graphql/queries";
 import { onNewMessage } from "./graphql/subscriptions";
-import { sendMessage } from "./graphql/mutations";
+import { sendMessage, submitSurvey } from "./graphql/mutations";
 import type { Message, OnNewMessageSubscription } from "./API";
 import { client } from "./amplifyConfig";
 import styles from "./ChatRoom.module.css";
@@ -277,17 +277,47 @@ function ChatRoom({ chatroomId, currentUserId, onLeaveChat }: ChatRoomProps) {
   };
 
   // --- NEW: Handle the voting submission ---
-  const handleVote = (votedUserId: string) => {
+  const handleVote = async (surveyData: {
+    votedUserId: string;
+    reasoning: string;
+    llmKnowledge: string;
+    chatbotFrequency: string;
+    age: number;
+    education: string;
+  }) => {
+    const { votedUserId, reasoning, llmKnowledge, chatbotFrequency, age, education } = surveyData;
     const votedParticipant = participantNames[votedUserId] || "Unknown";
     const isAi = votedUserId.startsWith("ai-");
 
-    alert(
-      `You voted for ${votedParticipant}. This was ${
-        isAi ? "correct!" : "incorrect."
-      }`
-    );
-    // Here, you could add more complex logic, like showing a results screen,
-    // storing the result, or navigating the user back to the waiting room.
+    try {
+      // Submit survey response to backend
+      await client.graphql({
+        query: submitSurvey,
+        variables: {
+          chatroomId: chatroomId,
+          userId: currentUserId,
+          botGuess: votedParticipant,
+          reasoning: reasoning,
+          llmKnowledge: llmKnowledge,
+          chatbotFrequency: chatbotFrequency,
+          age: age,
+          education: education,
+        },
+      });
+
+      alert(
+        `Thank you for your submission!\n\nYou voted for ${votedParticipant}. This was ${
+          isAi ? "correct!" : "incorrect."
+        }`
+      );
+    } catch (error) {
+      console.error("Error submitting survey:", error);
+      alert("Failed to submit survey. Please try again.");
+    }
+    
+    // Navigate back or show results
+    onLeaveChat();
+  };
   };
 
   // Format timestamp for display
