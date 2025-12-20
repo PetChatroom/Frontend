@@ -252,6 +252,7 @@ function ChatRoom({ chatroomId, currentUserId, onLeaveChat }: ChatRoomProps) {
       senderId: currentUserId,
       text: messageText,
       createdAt: new Date().toISOString(),
+      __typename: 'Message',
     };
 
     // Optimistically add message to UI immediately
@@ -317,7 +318,6 @@ function ChatRoom({ chatroomId, currentUserId, onLeaveChat }: ChatRoomProps) {
     
     // Navigate back or show results
     onLeaveChat();
-  };
   };
 
   // Format timestamp for display

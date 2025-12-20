@@ -1,6 +1,6 @@
 // src/components/VoteModal.tsx
 
-import { useState } from "react";
+import React, { useState } from "react";
 import styles from "./VoteModal.module.css";
 
 interface VoteModalProps {
@@ -76,7 +76,7 @@ function VoteModal({ participants, onVote }: VoteModalProps) {
             <h2>Why do you think this person was the bot?</h2>
             <textarea
               value={reasoning}
-              onChange={(e) => setReasoning(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setReasoning(e.target.value)}
               placeholder="Enter your reasoning here..."
               className={styles.textarea}
               rows={4}
@@ -98,7 +98,7 @@ function VoteModal({ participants, onVote }: VoteModalProps) {
                     name="llmKnowledge"
                     value={level}
                     checked={llmKnowledge === level}
-                    onChange={(e) => setLlmKnowledge(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setLlmKnowledge(e.target.value)}
                   />
                   {level}
                 </label>
@@ -121,7 +121,7 @@ function VoteModal({ participants, onVote }: VoteModalProps) {
                     name="chatbotFrequency"
                     value={freq}
                     checked={chatbotFrequency === freq}
-                    onChange={(e) => setChatbotFrequency(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setChatbotFrequency(e.target.value)}
                   />
                   {freq}
                 </label>
@@ -139,7 +139,7 @@ function VoteModal({ participants, onVote }: VoteModalProps) {
             <input
               type="number"
               value={age}
-              onChange={(e) => setAge(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAge(e.target.value)}
               placeholder="Enter your age"
               className={styles.input}
               min="1"
@@ -162,7 +162,7 @@ function VoteModal({ participants, onVote }: VoteModalProps) {
                     name="education"
                     value={edu}
                     checked={education === edu}
-                    onChange={(e) => setEducation(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEducation(e.target.value)}
                   />
                   {edu}
                 </label>
