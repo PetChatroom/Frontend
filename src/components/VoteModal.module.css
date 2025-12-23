@@ -1,0 +1,149 @@
+/* src/components/VoteModal.module.css */
+
+.modalOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+}
+
+.modalContent h2 {
+  margin-top: 0;
+  color: #333;
+}
+
+.modalContent p {
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+
+.voteOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.voteButton {
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--whatsapp-secondary);
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.voteButton:hover {
+  background-color: var(--whatsapp-primary);
+}
+
+.textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  resize: vertical;
+  margin-bottom: 1rem;
+}
+
+.textarea:focus {
+  outline: none;
+  border-color: #25d366;
+}
+
+.input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-family: inherit;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #25d366;
+}
+
+.radioGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.radioLabel:hover {
+  border-color: #25d366;
+  background-color: #f0f9f4;
+}
+
+.radioLabel input[type="radio"] {
+  margin-right: 0.75rem;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.radioLabel input[type="radio"]:checked + * {
+  font-weight: 600;
+}
+
+.nextButton {
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #25d366;
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: 100%;
+}
+
+.nextButton:hover:not(:disabled) {
+  background-color: #20ba5a;
+}
+
+.nextButton:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.progressIndicator {
+  margin-top: 1.5rem;
+  font-size: 0.85rem;
+  color: #666;
+}
